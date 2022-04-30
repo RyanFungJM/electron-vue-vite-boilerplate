@@ -1,0 +1,89 @@
+{
+    "name": "app",
+    "version": "1.0.0",
+    "productName": "electron-vue-vite-boilerplate",
+    "main": "src/main/dist/index.js",
+    "scripts": {
+        "start": "cross-env DEV_MODE=development concurrently -r -i --kill-others-on-fail npm:start:renderer npm:start:main",
+        "start:renderer": "cross-env DEV_MODE=development vite serve ./src/renderer",
+        "start:main": "cross-env DEV_MODE=development ts-node ./scripts/start-main.ts",
+        "type-check": "vue-tsc --noEmit -p ./src/renderer",
+        "build:renderer": "pnpm run type-check && vite build ./src/renderer",
+        "build:main": "ts-node ./scripts/build-main.ts",
+        "serve": "vite preview",
+        "build:app": "ts-node ./scripts/pack.ts",
+        "build:win": "pnpm install && ts-node ./scripts/pack.ts"
+    },
+    "dependencies": {
+        "adm-zip": "0.5.9",
+        "ant-design-vue": "2.2.8",
+        "axios": "0.25.0",
+        "chalk": "4.1.2",
+        "dateformat": "4.5.1",
+        "dotenv": "10.0.0",
+        "electron-localshortcut": "3.2.1",
+        "electron-log": "4.4.6",
+        "emittery": "0.10.1",
+        "fs-extra": "10.0.0",
+        "got": "11.8.2",
+        "is-online": "9.0.1",
+        "p-queue": "6.6.2",
+        "semver": "7.3.5",
+        "strip-ansi": "6.0.0",
+        "sudo-prompt": "9.2.1"
+    },
+    "devDependencies": {
+        "@types/adm-zip": "0.4.34",
+        "@types/async": "3.2.12",
+        "@types/dateformat": "3.0.1",
+        "@types/electron-localshortcut": "3.1.0",
+        "@types/fs-extra": "9.0.13",
+        "@types/semver": "7.3.9",
+        "@vitejs/plugin-vue": "2.1.0",
+        "@volar/experimental": "latest",
+        "@vue/compiler-sfc": "3.2.30",
+        "electron": "16.0.8",
+        "electron-builder": "22.14.13",
+        "electron-devtools-installer": "3.2.0",
+        "enquirer": "2.3.6",
+        "execa": "5.1.1",
+        "less": "4.1.2",
+        "type-fest": "2.11.1",
+        "vite": "2.7.13",
+        "vite-svg-loader": "3.1.2",
+        "vue": "3.2.30",
+        "vue-router": "4.0.12",
+        "vue-tsc": "0.31.2",
+        "vuex": "4.0.2"
+    },
+    "build": {
+        "appId": "org.ytj.electron-vue-vite-boilerplate",
+        "files": [
+            "node_modules/",
+            "!**/node_modules/**/{license,LICENSE,license.md,LICENSE.md}",
+            "!**/node_modules/**/{history,HISTORY,history.md,HISTORY.md}",
+            "!**/node_modules/**/{readme,README,readme.md,README.md}",
+            "!**/node_modules/**/*.{test,spec}.js",
+            "!**/node_modules/**/*.ts",
+            "src/main/dist/",
+            "src/preload/dist/",
+            "src/renderer/dist/",
+            "package.json"
+        ],
+        "directories": {
+            "app": "./"
+        },
+        "mac": {
+            "category": "public.app-category.developer-tools",
+            "target": "dmg"
+        },
+        "win": {
+            "target": "nsis",
+            "requestedExecutionLevel": "requireAdministrator"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true
+        }
+    }
+}
